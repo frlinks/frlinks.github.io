@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.6.0/js/all.js"></script>
+    <title>FrLinks 友链墙</title>
+    <style>
+        :root {
+            --bg-color: #f4f4f4;
+            --text-color: #333;
+            --card-bg-color: rgba(255, 255, 255, 0.8);
+            --card-text-color: #333;
+            --banner-bg-color: #007BFF;
+            --button-bg-color: #28a745;
+            --button-hover-bg-color: #218838;
+            --random-button-bg-color: #007BFF;
+            --random-button-hover-bg-color: #0056b3;
+            --tag-bg-color: #007BFF;
+            --change-button-bg-color: #007BFF;
+            --change-button-hover-bg-color: #0056b3;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(90deg, #2f2e33 0%, 7.60286%, #2d2c35 15.2057%, 20.7513%, #2b2c34 26.297%, 27.6386%, #2b2c34 28.9803%, 38.2826%, #272c35 47.585%, 48.1216%, #262b36 48.6583%, 53.1306%, #242b35 57.6029%, 61.5385%, #232a36 65.4741%, 68.7835%, #1e2a36 72.093%, 75.7603%, #1b2734 79.4275%, 82.8265%, #182634 86.2254%, 87.8354%, #152535 89.4454%, 91.8605%, #122335 94.2755%, 95.4383%, #112234 96.6011%, 98.3005%, #102133 100%);
+            --bg-color: #121212;
+            --text-color: #f4f4f4;
+            --card-bg-color: rgba(14, 14, 14, 0.8);
+            --card-text-color: #f4f4f4;
+            --banner-bg-color: #333;
+            --button-bg-color: #4caf50;
+            --button-hover-bg-color: #45a049;
+            --random-button-bg-color: #555;
+            --random-button-hover-bg-color: #333;
+            --tag-bg-color: #007BFF;
+        }
+
+        body {
+            background: linear-gradient(90deg, #eff2f7 0%, 7.60286%, #edf0f9 15.2057%, 20.7513%, #ebf0f8 26.297%, 27.6386%, #ebf0f8 28.9803%, 38.2826%, #e7edf9 47.585%, 48.1216%, #e6ecfa 48.6583%, 53.1306%, #e4ecf9 57.6029%, 61.5385%, #e3eafa 65.4741%, 68.7835%, #deeafa 72.093%, 75.7603%, #dbe6f8 79.4275%, 82.8265%, #d8e5f8 86.2254%, 87.8354%, #d5e4f9 89.4454%, 91.8605%, #d2e2f9 94.2755%, 95.4383%, #d1e1f8 96.6011%, 98.3005%, #d0e0f7 100%);
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 80px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .banner {
+            width: 100%;
+            background-color: var(--banner-bg-color);
+            padding: 15px 20px;
+            color: white;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
+        .banner-title {
+            font-size: 1.5em;
+            margin: 0;
+        }
+
+        .banner-buttons {
+            display: flex;
+            margin-right: 30px;
+        }
+
+        .banner-buttons a {
+            background-color: var(--button-bg-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-left: 10px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .banner-buttons a.random-button {
+            background-color: var(--random-button-bg-color);
+        }
+
+        .banner-buttons a:hover {
+            background-color: var(--button-hover-bg-color);
+        }
+
+        .banner-buttons a.random-button:hover {
+            background-color: var(--random-button-hover-bg-color);
+        }
+
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-bg-color);
+            color: var(--card-text-color);
+            border-radius: 8px;
+            margin: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            width: 90%;
+            height: 60px;
+            max-width: 1600px;
+            transition: transform 0.2s, background-color 0.3s, color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 26px 40px -24px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1.5em;
+            margin: 0;
+            width: 100%;
+        }
+
+        .card-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            margin: 5px 0;
+        }
+
+        .card-description {
+            font-size: 1em;
+            margin: 0;
+            flex: 1;
+            text-align: left;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-direction: row;
+            margin: 0;
+            align-items: center;
+        }
+
+        .tag {
+            background-color: var(--tag-bg-color);
+            color: white;
+            border-radius: 15px;
+            padding: 5px 10px;
+            margin-left: 5px;
+            font-size: 0.8em;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .dark-mode-toggle {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            background-color: var(--random-button-bg-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: var(--random-button-hover-bg-color);
+        }
+
+        .all-links {
+            width: 90%;
+            text-align: left;
+            margin: 15px 0;
+        }
+
+        .recommendation {
+            width: 90%;
+            text-align: left;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .change-button {
+            background: none;
+            color: var(--change-button-bg-color);
+            border: none;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: color 0.2s;
+        }
+        .change-button:hover {
+            color: var(--change-button-hover-bg-color);
+        }
+        .change-button:active {
+            color: var(--change-button-hover-bg-color);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="banner">
+        <div class="banner-title">友链墙</div>
+        <div class="banner-buttons">
+            <a href="https://github.com/example/example" target="_blank"><i class="fa-solid fa-location-arrow"></i> 加入我们</a>
+            <a href="javascript:void(0);" class="random-button" onclick="randomRedirect()"><i class="fa-solid fa-link"></i> 随机跳转</a>
+        </div>
+    </div>
+
+    <div class="recommendation">
+        <h2>随机推荐</h2>
+        <button class="change-button" onclick="generateRandomLinks()"><i class="fa-solid fa-arrows-rotate fa-lg"></i></button>
+    </div>
+    <div class="card-container" id="random-links-container">
+        <!-- 随机链接将在这里动态生成 -->
+    </div>
+    <div class="all-links">
+        <h2>全部链接</h2>
+    </div>
+    <div class="card-container" id="all-links-container">
+        <!-- 友链卡片将在这里动态生成 -->
+    </div>
+
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <i class="fas fa-circle-half-stroke"></i>
+    </button>
+
+    <script src="links.js"></script>
+    <script>
+        const randomLinksContainer = document.getElementById('random-links-container');
+        const allLinksContainer = document.getElementById('all-links-container');
+
+        function generateRandomLinks() {
+            randomLinksContainer.innerHTML = '';
+
+            const randomLinks = [];
+            while (randomLinks.length < 4) {
+                const randomIndex = Math.floor(Math.random() * links.length);
+                if (!randomLinks.includes(links[randomIndex])) {
+                    randomLinks.push(links[randomIndex]);
+                }
+            }
+
+            randomLinks.forEach(link => {
+                const card = document.createElement('a');
+                card.href = link.url;
+                card.target = '_blank';
+                card.className = 'card';
+
+                const title = document.createElement('div');
+                title.className = 'card-title';
+                title.innerHTML = link.title + ' <i class="fa-solid fa-arrow-up-right-from-square fa-xs" style="color: #0076D4;"></i>';
+                card.appendChild(title);
+
+                const contentContainer = document.createElement('div');
+                contentContainer.className = 'card-content';
+
+                const description = document.createElement('div');
+                description.className = 'card-description';
+                description.textContent = link.description;
+                contentContainer.appendChild(description);
+
+                const tagsContainer = document.createElement('div');
+                tagsContainer.className = 'card-tags';
+
+                link.tags.forEach(tagObj => {
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.textContent = tagObj.tag;
+                    tagsContainer.appendChild(tag);
+                });
+
+                contentContainer.appendChild(tagsContainer);
+                card.appendChild(contentContainer);
+                randomLinksContainer.appendChild(card);
+            });
+        }
+        window.onload = function () {
+            generateRandomLinks();
+            links.forEach(link => {
+                const card = document.createElement('a');
+                card.href = link.url;
+                card.target = '_blank';
+                card.className = 'card';
+
+                const title = document.createElement('div');
+                title.className = 'card-title';
+                title.innerHTML = link.title + ' <i class="fa-solid fa-arrow-up-right-from-square fa-xs" style="color: #0076D4;"></i>';
+                card.appendChild(title);
+
+                const contentContainer = document.createElement('div');
+                contentContainer.className = 'card-content';
+
+                const description = document.createElement('div');
+                description.className = 'card-description';
+                description.textContent = link.description;
+                contentContainer.appendChild(description);
+
+                const tagsContainer = document.createElement('div');
+                tagsContainer.className = 'card-tags';
+
+                link.tags.forEach(tagObj => {
+                    const tag = document.createElement('span');
+                    tag.className = 'tag';
+                    tag.textContent = tagObj.tag;
+                    tagsContainer.appendChild(tag);
+                });
+
+                contentContainer.appendChild(tagsContainer);
+                card.appendChild(contentContainer);
+                allLinksContainer.appendChild(card);
+            });
+            const theme = localStorage.getItem('theme');
+            if (theme === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        }
+
+        function randomRedirect() {
+            const randomIndex = Math.floor(Math.random() * links.length);
+            window.open(links[randomIndex].url, '_blank');
+        }
+
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        }
+    </script>
+</body>
+</html>
