@@ -36,4 +36,16 @@ const links = [
         description: "在这里聊聊天或者备个份。",
         tags: []
     },
+    {
+        title: "Note.msBBS",
+        url: "https://bbs.notems.xyz",
+        description: "在这里聊聊天或者备个份。",
+        tags: []
+    },
+    {
+        title: "NodeLoc",
+        url: "https://nodeloc.com",
+        description: "自由、开放、友好、有趣的交流社区。",
+        tags: []
+    },
 ];
