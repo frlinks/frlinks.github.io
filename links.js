@@ -47,5 +47,5 @@ const links = [
         url: "https://nodeloc.com",
         description: "自由、开放、友好、有趣的交流社区。",
         tags: []
-    },
+    }
 ];
