@@ -41,5 +41,13 @@ const links = [
         url: "https://nodeloc.com",
         description: "自由、开放、友好、有趣的交流社区。",
         tags: []
+    },
+    {
+        title: "Uncommon Morning Forum",
+        url: "https://forum.ya.sy",
+        description: "每个夜晚都会过去，迎接你的必然是黎明。",
+        tags: [
+            { tag: "社区" }
+        ]
     }
 ];
