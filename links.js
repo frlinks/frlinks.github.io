@@ -49,5 +49,14 @@ const links = [
         tags: [
             { tag: "社区" }
         ]
+    },
+    {
+        title: "MCBBS",
+        url: "https://fwrec.com",
+        description: "新的 Minecraft 论坛。",
+        tags: [
+            { tag: "论坛" },
+            { tag: "MC" }
+        ]
     }
 ];
