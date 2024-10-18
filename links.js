@@ -58,5 +58,15 @@ const links = [
             { tag: "论坛" },
             { tag: "MC" }
         ]
+    },
+    {
+        title: "TASA-Ed官网",
+        url: "https://www.tasaed.top",
+        description: "TASA-Ed工作室官网！",
+        tags: [
+            { tag: "工作室" },
+            { tag: "公益" },
+            { tag: "官网" }
+        ]
     }
 ];
